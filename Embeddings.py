@@ -109,33 +109,74 @@ reviews = train + test
 
 from typing import List, Tuple, Dict
 import numpy as np
-
+import math
    
 class VectorModel:
     
     def __init__(self, vector_dict: Dict[str, np.ndarray]):
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        self.vector_dict=vector_dict
+        #raise NotImplementedError()
         
     def embed(self, word: str) -> np.ndarray:
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        my_vector=np.zeros(len(word))
+        counter=0
+        dic={}                   
+        for i in range(0,len(word)):
+            if word[i] in dic.keys():
+                my_vector[i]=dic[word[i]]
+            else:    
+                dic[word[i]]=counter 
+                my_vector[i]=counter
+                counter+=1  
+                               
+        return my_vector                 
+        #raise NotImplementedError()
     
     def vector_size(self) -> int:
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        return len(self.vector_dict)
+        #raise NotImplementedError()
     
     def cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        sumxx, sumxy, sumyy = 0, 0, 0
+        for i in range(len(vec1)):
+            x = vec1[i] 
+            y = vec2[i]
+            sumxx += x*x
+            sumyy += y*y
+            sumxy += x*y
+        return sumxy/math.sqrt(sumxx*sumyy)
+
+        #raise NotImplementedError()
 
     def most_similar(self, word: str, top_n: int=5) -> List[Tuple[str, float]]:
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        similar1={}
+        similar=[]
+        for word_vect,embeding in vector_dict.items():
+            similar1[word_vect]=self.cosine_similarity(self.embed(word),embeding)
+            
+        {k: v for k, v in sorted(similar1.items(), key=lambda item: item[1])}
+        keys=similar1.keys()
+        values=similar1.values()
+        for i in range(0,top_n):
+            similar.append((keys[i],values[i]))
+            
+        return similar    
+        #raise NotImplementedError()
         
     def most_similar_vec(self, vec: np.ndarray, top_n: int=5) -> List[Tuple[str, float]]:
-        # YOUR CODE HERE
-        raise NotImplementedError()
+        similar1={}
+        similar=[]
+        for word_vect,embeding in vector_dict.items():
+            similar1[ word_vect]=self.cosine_similarity(vec,embeding)
+            
+        {k: v for k, v in sorted(similar1.items(), key=lambda item: item[1])}
+        keys=similar1.keys()
+        values=similar1.values()
+        for i in range(0,top_n):
+            similar.append((keys[i],values[i]))
+            
+        return similar    
+        #raise NotImplementedError()
         
 
 
