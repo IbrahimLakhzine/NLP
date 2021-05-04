@@ -199,8 +199,26 @@ class VectorModel:
 
 input_words = ['good', 'tomato', 'restaurant', 'beer', 'wonderful', 'dinner']
 
-# YOUR CODE HERE
-raise NotImplementedError()
+print("for Word2Vec model")
+model = VectorModel(w2v_vectors)
+for word in input_words:
+    three_words=model.most_similar(word,3)
+    print(three_words,"\")
+
+print("for FastText model")          
+model = VectorModel(ft_vectors)
+for word in input_words:
+    three_words=model.most_similar(word,3)
+    print(three_words,"\")
+          
+          
+print("for TfIdf model")
+model = VectorModel(tfidf_vectors)
+for word in input_words:
+    three_words=model.most_similar(word,3)
+    print(three_words,"\")
+          
+#raise NotImplementedError()
 
 
 # ## Investigating similarity B) [10 points]
